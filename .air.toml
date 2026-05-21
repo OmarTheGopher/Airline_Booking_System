@@ -1,0 +1,53 @@
+# Air configuration file for Flight Booking System
+root = "."
+testdata_dir = "testdata"
+tmp_dir = "tmp"
+
+[build]
+  # هنا بنحدد إن الـ main موجود جوه مجلد cmd/api (حسب هيكلة الـ Clean Architecture)
+  # لو الـ main.go في الـ root مباشرة، سيبها "."
+  cmd = "go build -o ./tmp/main.exe ./cmd/api/main.go"
+  
+  # اسم ملف الـ binary اللي هيتنفذ
+  bin = "tmp\\main.exe"
+  
+  # تأخير بسيط عشان ندي فرصة للجهاز يخلص الـ build
+  delay = 1000
+  
+  # المجلدات اللي Air هيراقبها (internals هي الأهم عندك)
+  include_dir = ["cmd", "internals", "pkg", "api"]
+  
+  # الامتدادات اللي بنراقبها
+  include_ext = ["go", "tpl", "tmpl", "html", "toml", "env"]
+  
+  # المجلدات اللي بنعملها Ignore عشان ميعملش Restart على الفاضي
+  exclude_dir = ["assets", "tmp", "vendor", "testdata", "migrations"]
+  
+  # استبعاد ملفات التست
+  exclude_regex = ["_test.go"]
+  
+  # مسح الشاشة عند كل Rebuild عشان الـ Logs تكون واضحة
+  stop_on_error = true
+  
+  # تحديد وقت لقتل العملية القديمة
+  kill_delay = "500ms"
+
+[color]
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
+
+[log]
+  main_only = false
+  silent = false
+  time = true # تفعيل الوقت عشان تعرف إمتى حصل الـ reload
+
+[misc]
+  # مسح ملف الـ exe عند الخروج
+  clean_on_exit = true
+
+[screen]
+  clear_on_rebuild = true
+  keep_scroll = true
